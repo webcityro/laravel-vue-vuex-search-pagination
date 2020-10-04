@@ -21,6 +21,10 @@ abstract class Search {
 		$total = $this->total();
 		$lastPage = $this->lastPage($total);
 
+		if ($lastPage < $this->params->page) {
+			$this->params->page = $lastPage;
+		}
+
 		return new Meta(
 			$total,
 			$lastPage,

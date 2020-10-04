@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProductSearch extends Search {
 
-    use EloquentSearch;
+	use EloquentSearch;
 
-    protected function query(): Builder {
-        $query = Product::query();
+	protected function query(): Builder {
+		$query = Product::query();
 
-        if ($this->params->search->hasFilter()) {
-            $query->where('name', 'LIKE', '%'.$this->params->search->search.'%');
-        }
+		if ($this->params->search->hasFilter()) {
+			$query->where('name', 'LIKE', '%'.$this->params->search->search.'%');
+		}
 
-        return $query;
-    }
+		return $query;
+	}
 }
