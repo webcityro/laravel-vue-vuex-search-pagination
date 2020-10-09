@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\SearchCollection;
 use App\Http\Requests\Product\FetchRequest;
 use App\Http\Resources\Product as ProductResource;
+use App\Http\Requests\Product\MultiFieldsFetchRequest;
 use App\Repositories\Contracts\ProductRepositoryContract;
 
 class ProductController extends Controller {
@@ -25,7 +26,19 @@ class ProductController extends Controller {
 		->with('defaultPerPage', config('system.default_per_page'));
 	}
 
-	public function fetch(FetchRequest $request): SearchCollection {
+	/* public function fetch(FetchRequest $request): SearchCollection {
+		return new SearchCollection(
+			$this->repository->search($request), ProductResource::class
+		);
+	} */
+
+	/* public function multiFieldsFetch(MultiFieldsFetchRequest $request): SearchCollection {
+		return new SearchCollection(
+			$this->repository->search($request), ProductResource::class
+		);
+	} */
+
+	public function fetch(MultiFieldsFetchRequest $request): SearchCollection {
 		return new SearchCollection(
 			$this->repository->search($request), ProductResource::class
 		);

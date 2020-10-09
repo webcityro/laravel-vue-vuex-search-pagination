@@ -10,6 +10,6 @@ use App\Repositories\Contracts\ProductRepositoryContract;
 class ProductRepository implements ProductRepositoryContract {
 
 	public function search(SearchFormRequest $request): Search {
-		return (new ProductSearch($request->requestParams(), $request->requestOrder()));
+		return (new ProductSearch($request->requestParams(), $request->requestOrder(), $request->searchFields()));
 	}
 }

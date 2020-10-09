@@ -11,10 +11,12 @@ abstract class Search {
 
 	protected $params;
 	protected $orderBy;
+	private $searchFields;
 
-	public function __construct(Params $params, OrderBy $orderBy) {
+	public function __construct(Params $params, OrderBy $orderBy, array $searchFields) {
 		$this->params = $params;
 		$this->orderBy = $orderBy;
+		$this->searchFields = $searchFields;
 	}
 
 	public function meta(): Meta {
@@ -35,6 +37,14 @@ abstract class Search {
 
 	public function params(): Params {
 		return $this->params;
+	}
+
+	public function searchFields(): array {
+		return $this->searchFields;
+	}
+
+	public function hasMultiFields(): bool {
+		return !empty($this->searchFields);
 	}
 
 	abstract public function total(): int;

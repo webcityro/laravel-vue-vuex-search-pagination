@@ -6,13 +6,13 @@ class SearchOnlyPayload extends Payload {
 
 	public $search;
 
-	public function __construct(string $search = null) {
+	public function __construct($search = null) {
 		$this->search = $search;
 	}
 
 	public function toArray(): array {
 		return [
-			'search' => (string)$this->search
+			'search' => is_null($this->search) ? '' : $this->search
 		];
 	}
 

@@ -9,12 +9,16 @@ use App\Http\Requests\SearchFormRequest;
 use App\Search\Payloads\MultiFieldsPayload;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FetchRequest extends FormRequest implements SearchFormRequest {
+class MultiFieldsFetchRequest extends FormRequest implements SearchFormRequest {
 
 	use SearchRequest;
 
 	public function authorize(): bool {
 		return true;
+	}
+
+	public function searchFields(): array {
+		return ['name', 'price'];
 	}
 
 	protected function orderByFields(): array {
@@ -24,4 +28,9 @@ class FetchRequest extends FormRequest implements SearchFormRequest {
 	protected function defaultOrderByField(): string {
 		return 'name';
 	}
+
+	protected function payload(): Payload {
+		return new MultiFieldsPayload($this->search ?? []);
+	}
+
 }
