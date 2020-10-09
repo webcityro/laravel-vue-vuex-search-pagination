@@ -16,7 +16,10 @@
 					group="product-search"
 					url="{{ route('product.fetch') }}"
 					:params="{
-						search: '',
+						search: {
+							name: '',
+							price: ''
+						},
 						per_page: {{ $defaultPerPage }},
 						page: 1,
 						order_by: 'name:asc'
@@ -24,16 +27,19 @@
 					v-slot="{ params, update, change, clear, processing }"
 				>
 					<form class="grid grid-cols-8 col-gap-4 pb-3 border-b border-gray-400">
-						<div class="col-span-8 md:col-span-4">
+						<div class="col-span-2 md:col-span-2">
 							<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="search">
-								Search
+								Product name
 							</label>
 							<div class="relative">
 								<span
-									v-if="params.search"
+									v-if="params.search.name"
 									class="absolute top-0 right-0 mt-4 mr-4 text-gray-500 cursor-pointer"
 									@click="clear({
-										search: ''
+										search: {
+											name: '',
+											price: params.search.price
+										}
 									})"
 								>
 									<times-circle
@@ -42,11 +48,42 @@
 								</span>
 								<input
 									type="text"
-									id="search"
-									name="search"
+									id="name"
+									name="name"
 									class="appearance-none block w-full bg-gray-200 focus:bg-white text-gray-700 border border-gray-400 focus:border-gray-500 rounded-sm py-3 pl-4 pr-10 mb-3 md:mb-0 leading-tight focus:outline-none"
-									placeholder="Search..."
-									v-model="params.search"
+									placeholder="Product name..."
+									v-model="params.search.name"
+									@input="update"
+									@keydown.enter.prevent
+								>
+							</div>
+						</div>
+						<div class="col-span-2 md:col-span-2">
+							<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="search">
+								Product price
+							</label>
+							<div class="relative">
+								<span
+									v-if="params.search.price"
+									class="absolute top-0 right-0 mt-4 mr-4 text-gray-500 cursor-pointer"
+									@click="clear({
+										search: {
+											price: '',
+											name: params.search.name
+										}
+									})"
+								>
+									<times-circle
+										class="fill-current h-4 pointer-events-none"
+									></times-circle>
+								</span>
+								<input
+									type="text"
+									id="price"
+									price="price"
+									class="appearance-none block w-full bg-gray-200 focus:bg-white text-gray-700 border border-gray-400 focus:border-gray-500 rounded-sm py-3 pl-4 pr-10 mb-3 md:mb-0 leading-tight focus:outline-none"
+									placeholder="Product price..."
+									v-model="params.search.price"
 									@input="update"
 									@keydown.enter.prevent
 								>
